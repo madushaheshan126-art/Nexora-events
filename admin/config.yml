@@ -15,6 +15,6 @@ collections:
       - { label: "Event Title", name: "title", widget: "string" }
       - { label: "Event Date", name: "date", widget: "datetime" }
       - { label: "Location / Venue", name: "location", widget: "string" }
-      - { label: "Category", name: "category", widget: "select", options: ["Luxury Wedding", "Corporate Gala", "Live Concert", "Private VIP"] }
+      - { label: "Category", name: "category", widget: "string", default: "Luxury Wedding" }
       - { label: "Cover Image", name: "image", widget: "image" }
       - { label: "Event Summary", name: "description", widget: "text" }
