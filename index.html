@@ -530,6 +530,21 @@
         </div>
     </main>
 
+
+<!-- COMPLETED EVENTS SECTION -->
+<section id="recent-events" class="py-24 px-6 max-w-7xl mx-auto border-t border-white/10">
+  <div class="text-center mb-16">
+    <p class="text-xs font-bold tracking-[0.2em] text-yellow-500 uppercase mb-3">PORTFOLIO & ARCHIVE</p>
+    <h2 class="text-4xl md:text-5xl font-bold text-white">Signature <span class="text-yellow-500">Executions.</span></h2>
+    <p class="text-gray-400 mt-4 max-w-2xl mx-auto">Explore our recently completed luxury weddings, corporate summits, and live productions across Sri Lanka.</p>
+  </div>
+
+  <!-- Events Grid (මෙතැනට තමයි Admin Panel එකෙන් දාන Events ස්වයංක්‍රීයව එන්නේ) -->
+  <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <p class="text-gray-500 col-span-full text-center">Loading recent events...</p>
+  </div>
+</section>
+
     <!-- Footer -->
     <footer class="bg-surface border-t border-white/10 py-12">
         <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between text-xs text-zinc-500 gap-4">
@@ -692,6 +707,56 @@
       }
     });
   }
+</script>
+
+<script>
+  async function loadNexoraEvents() {
+    const grid = document.getElementById('events-grid');
+    try {
+      // GitHub API එක හරහා _events ෆෝල්ඩරයේ ඇති ෆයිල් ලබා ගැනීම
+      const res = await fetch('https://api.github.com/repos/madushaheshan126-art/Nexora-events/contents/_events');
+      if (!res.ok) {
+        grid.innerHTML = '<p class="text-gray-500 col-span-full text-center">No events published yet.</p>';
+        return;
+      }
+      const files = await res.json();
+      grid.innerHTML = '';
+
+      // අලුත්ම Events මුලින් පෙන්වීමට reverse() කිරීම
+      for (const file of files.reverse()) {
+        if (!file.name.endsWith('.md')) continue;
+        const rawRes = await fetch(file.download_url);
+        const text = await rawRes.text();
+
+        // Markdown ගොනුවෙන් දත්ත වෙන් කර ගැනීම
+        const title = (text.match(/title:\s*"?([^"\n]+)"?/) || [])[1] || 'Nexora Event';
+        const location = (text.match(/location:\s*"?([^"\n]+)"?/) || [])[1] || 'Sri Lanka';
+        const category = (text.match(/category:\s*"?([^"\n]+)"?/) || [])[1] || 'Event';
+        const image = (text.match(/image:\s*"?([^"\n]+)"?/) || [])[1] || '';
+        const desc = (text.match(/description:\s*\|?\s*([\s\S]*?)(?=\n[a-z]+:|$)/) || [])[1] || '';
+
+        const card = `
+          <div class="bg-zinc-900/80 border border-white/10 rounded-2xl overflow-hidden hover:border-yellow-500/50 transition-all duration-300 flex flex-col">
+            <div class="h-56 overflow-hidden bg-zinc-800 relative">
+              ${image ? `<img src="${image}" alt="${title}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">` : ''}
+              <span class="absolute top-4 left-4 bg-black/80 backdrop-blur-md text-yellow-400 text-xs font-semibold px-3 py-1 rounded-full border border-yellow-500/30">
+                ${category}
+              </span>
+            </div>
+            <div class="p-6 flex-1 flex flex-col">
+              <h3 class="text-xl font-bold text-white mb-2">${title}</h3>
+              <p class="text-xs text-gray-400 mb-4 flex items-center gap-1">📍 ${location}</p>
+              <p class="text-gray-300 text-sm leading-relaxed flex-1">${desc.trim()}</p>
+            </div>
+          </div>
+        `;
+        grid.innerHTML += card;
+      }
+    } catch (err) {
+      grid.innerHTML = '<p class="text-gray-500 col-span-full text-center">Unable to load events right now.</p>';
+    }
+  }
+  loadNexoraEvents();
 </script>
 
 </body>
