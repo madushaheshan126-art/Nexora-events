@@ -7,104 +7,131 @@
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   
   <style>
+    /* === NEXORA LUXURY ADMIN UI === */
     :root {
-      --bg-main: #09090b;
-      --bg-panel: #121215;
-      --bg-input: #18181b;
-      --border: #27272a;
-      --gold: #ca8a04;
-      --gold-hover: #eab308;
-      --text: #f4f4f5;
+      --bg-main: #000000;
+      --bg-panel: #111111;
+      --bg-input: #1a1a1a;
+      --gold: #d4af37;
+      --gold-hover: #f1c40f;
+      --text-main: #ffffff;
+      --text-muted: #888888;
+      --border: #333333;
     }
 
+    /* 1. Global Backgrounds */
     body, html, #nc-root {
       background-color: var(--bg-main) !important;
-      color: var(--text) !important;
+      color: var(--text-main) !important;
       font-family: 'Inter', sans-serif !important;
     }
 
-    /* හැම සුදු Background එකක්ම Dark කිරීම */
-    div[class*="AppMainContainer"],
-    div[class*="EditorContainer"],
-    div[class*="CollectionContainer"],
-    div[class*="PaneContainer"],
-    aside[class*="SidebarContainer"] {
-      background-color: var(--bg-main) !important;
-    }
-
-    /* Top Header & Toolbar */
-    header[class*="AppHeader"],
-    div[class*="ToolbarContainer"] {
-      background-color: var(--bg-panel) !important;
-      border-bottom: 1px solid var(--border) !important;
-    }
-
-    /* Form Container & Cards */
+    /* 2. Force ALL Decap Container Backgrounds to Dark */
+    div[class*="AppMainContainer"], 
+    div[class*="CollectionContainer"], 
+    div[class*="EditorContainer"], 
+    div[class*="ToolbarContainer"],
     div[class*="ControlPaneContainer"],
-    div[class*="ListCard"],
-    div[class*="GridCard"] {
+    aside[class*="SidebarContainer"],
+    div[class*="Card"],
+    div[class*="PreviewPane"] {
+      background-color: var(--bg-main) !important;
+      color: var(--text-main) !important;
+      border-color: var(--border) !important;
+    }
+
+    /* 3. Header & Sidebar */
+    header[class*="AppHeader"] {
       background-color: var(--bg-panel) !important;
-      border: 1px solid var(--border) !important;
-      border-radius: 12px !important;
-      color: var(--text) !important;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+      border-bottom: 1px solid var(--gold) !important;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.1) !important;
     }
-
-    /* Typography & Labels */
-    h1, h2, h3, h4, label, span, a, button {
-      color: var(--text) !important;
-    }
+    header h1, header a, header span { color: var(--gold) !important; }
     
-    label[class*="FieldLabel"] {
-      background-color: var(--border) !important;
+    aside[class*="SidebarContainer"] {
+      border-right: 1px solid var(--border) !important;
+      background-color: var(--bg-panel) !important;
+    }
+    a[class*="SidebarNavLink"] { color: var(--text-muted) !important; }
+    a[class*="SidebarNavLink"][class*="active"] {
       color: var(--gold) !important;
-      border-radius: 6px 6px 0 0 !important;
-      padding: 6px 12px !important;
+      border-left: 3px solid var(--gold) !important;
+      background: rgba(212, 175, 55, 0.1) !important;
+    }
+
+    /* 4. Form Fields & Labels */
+    label[class*="FieldLabel"] {
+      color: var(--gold) !important;
       font-weight: 600 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 2px !important;
+      font-size: 12px !important;
+      border: none !important;
+      background: transparent !important;
+      margin-bottom: 8px !important;
     }
 
-    /* Inputs & Textareas */
-    input, textarea, select, div[class*="ControlContainer"] {
+    input, textarea, select, 
+    div[class*="ControlContainer"], 
+    div[class*="DateTimeControl"] input {
       background-color: var(--bg-input) !important;
-      color: var(--text) !important;
+      color: var(--text-main) !important;
       border: 1px solid var(--border) !important;
-      border-radius: 6px !important;
+      border-radius: 4px !important;
+      padding: 10px !important;
     }
 
-    input:focus, textarea:focus {
+    input:focus, textarea:focus, select:focus {
       border-color: var(--gold) !important;
-      box-shadow: 0 0 0 2px rgba(202, 138, 4, 0.2) !important;
+      box-shadow: 0 0 5px rgba(212, 175, 55, 0.4) !important;
       outline: none !important;
     }
 
-    /* Primary Buttons (Publish / New Event) */
+    /* 5. List Items & Cards (Dashboard) */
+    a[class*="ListCard"] {
+      background-color: var(--bg-panel) !important;
+      border: 1px solid var(--border) !important;
+      border-radius: 8px !important;
+      margin-bottom: 12px !important;
+      transition: all 0.3s ease !important;
+    }
+    a[class*="ListCard"]:hover { 
+      border-color: var(--gold) !important; 
+      transform: translateY(-2px) !important;
+    }
+    h2[class*="CardHeading"] { color: var(--text-main) !important; }
+
+    /* 6. Buttons */
+    button[class*="Button"], a[class*="Button"] {
+      border-radius: 4px !important;
+      transition: all 0.3s ease !important;
+    }
+    
+    /* Primary Action Buttons (Publish, New) */
     button[class*="PublishButton"], 
     a[class*="CollectionTopNewButton"],
     button[class*="LoginButton"] {
       background-color: var(--gold) !important;
       color: #000 !important;
-      border-radius: 8px !important;
       font-weight: bold !important;
-      transition: all 0.3s ease !important;
+      text-transform: uppercase !important;
+      letter-spacing: 1px !important;
     }
-    
     button[class*="PublishButton"]:hover, 
     a[class*="CollectionTopNewButton"]:hover {
       background-color: var(--gold-hover) !important;
-      transform: translateY(-2px) !important;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.4) !important;
     }
 
-    /* Image Upload Button */
+    /* Secondary Buttons (Upload Image, etc) */
     button[class*="FileWidgetButton"] {
-      background-color: var(--border) !important;
-      color: var(--text) !important;
-      border: 1px solid #3f3f46 !important;
-      border-radius: 6px !important;
-    }
-    
-    button[class*="FileWidgetButton"]:hover {
-      border-color: var(--gold) !important;
+      background-color: var(--bg-main) !important;
+      border: 1px solid var(--gold) !important;
       color: var(--gold) !important;
+    }
+    button[class*="FileWidgetButton"]:hover {
+      background-color: var(--gold) !important;
+      color: #000 !important;
     }
   </style>
 </head>
