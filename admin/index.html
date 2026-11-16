@@ -4,170 +4,111 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nexora Events | Admin Studio</title>
-  <!-- Netlify Identity Widget -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   
-  <!-- Nexora Custom Dark & Gold Theme -->
   <style>
     :root {
-      --bg-dark: #09090b;
-      --bg-card: #121215;
+      --bg-main: #09090b;
+      --bg-panel: #121215;
       --bg-input: #18181b;
-      --border-subtle: #27272a;
-      --gold-primary: #eab308;
-      --gold-hover: #ca8a04;
-      --text-main: #f4f4f5;
-      --text-muted: #a1a1aa;
+      --border: #27272a;
+      --gold: #ca8a04;
+      --gold-hover: #eab308;
+      --text: #f4f4f5;
     }
 
-    body, html {
-      background-color: var(--bg-dark) !important;
-      color: var(--text-main) !important;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    body, html, #nc-root {
+      background-color: var(--bg-main) !important;
+      color: var(--text) !important;
+      font-family: 'Inter', sans-serif !important;
     }
 
-    /* Top Header Bar */
-    header[class*="AppHeader"] {
-      background-color: var(--bg-card) !important;
-      border-bottom: 1px solid var(--border-subtle) !important;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
-    }
-
-    header a, header button, header span {
-      color: var(--text-main) !important;
-    }
-
-    header a:hover, header button:hover {
-      color: var(--gold-primary) !important;
-    }
-
-    /* Sidebar & Main Content Background */
-    div[class*="CollectionContainer"],
+    /* හැම සුදු Background එකක්ම Dark කිරීම */
+    div[class*="AppMainContainer"],
     div[class*="EditorContainer"],
+    div[class*="CollectionContainer"],
+    div[class*="PaneContainer"],
     aside[class*="SidebarContainer"] {
-      background-color: var(--bg-dark) !important;
-      color: var(--text-main) !important;
+      background-color: var(--bg-main) !important;
     }
 
-    /* Cards, Sidebar Boxes & Entry Items */
-    aside[class*="SidebarContainer"] > div,
+    /* Top Header & Toolbar */
+    header[class*="AppHeader"],
+    div[class*="ToolbarContainer"] {
+      background-color: var(--bg-panel) !important;
+      border-bottom: 1px solid var(--border) !important;
+    }
+
+    /* Form Container & Cards */
+    div[class*="ControlPaneContainer"],
     div[class*="ListCard"],
-    div[class*="GridCard"],
-    div[class*="ControlPaneContainer"] {
-      background-color: var(--bg-card) !important;
-      border: 1px solid var(--border-subtle) !important;
+    div[class*="GridCard"] {
+      background-color: var(--bg-panel) !important;
+      border: 1px solid var(--border) !important;
       border-radius: 12px !important;
-      color: var(--text-main) !important;
+      color: var(--text) !important;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
     }
 
-    div[class*="ListCard"]:hover,
-    div[class*="GridCard"]:hover {
-      border-color: var(--gold-primary) !important;
+    /* Typography & Labels */
+    h1, h2, h3, h4, label, span, a, button {
+      color: var(--text) !important;
     }
-
-    /* Sidebar Active Link */
-    a[class*="SidebarNavLink"][class*="active"] {
-      background-color: rgba(234, 179, 8, 0.12) !important;
-      color: var(--gold-primary) !important;
-      border-left: 3px solid var(--gold-primary) !important;
-    }
-
-    /* Headings & Labels */
-    h1, h2, h3, h4, label {
-      color: var(--text-main) !important;
-    }
-
+    
     label[class*="FieldLabel"] {
-      background-color: var(--border-subtle) !important;
-      color: var(--gold-primary) !important;
-      border-radius: 4px 4px 0 0 !important;
+      background-color: var(--border) !important;
+      color: var(--gold) !important;
+      border-radius: 6px 6px 0 0 !important;
+      padding: 6px 12px !important;
       font-weight: 600 !important;
-      letter-spacing: 0.05em !important;
     }
 
-    /* Inputs, Textareas & Select Boxes */
-    input[type="text"],
-    input[type="datetime-local"],
-    textarea,
-    select,
-    div[class*="ControlContainer"] input,
-    div[class*="ControlContainer"] textarea {
+    /* Inputs & Textareas */
+    input, textarea, select, div[class*="ControlContainer"] {
       background-color: var(--bg-input) !important;
-      color: var(--text-main) !important;
-      border: 1px solid var(--border-subtle) !important;
-      border-radius: 8px !important;
-    }
-
-    input:focus, textarea:focus, select:focus {
-      border-color: var(--gold-primary) !important;
-      outline: none !important;
-      box-shadow: 0 0 0 2px rgba(234, 179, 8, 0.2) !important;
-    }
-
-    /* Primary Buttons (New Event / Publish) */
-    a[class*="CollectionTopNewButton"],
-    button[class*="PublishButton"],
-    button[class*="LoginButton"] {
-      background-color: var(--gold-primary) !important;
-      color: #000000 !important;
-      font-weight: 700 !important;
-      border-radius: 8px !important;
-      border: none !important;
-      transition: all 0.2s ease !important;
-    }
-
-    a[class*="CollectionTopNewButton"]:hover,
-    button[class*="PublishButton"]:hover,
-    button[class*="LoginButton"]:hover {
-      background-color: var(--gold-hover) !important;
-      transform: translateY(-1px);
-    }
-
-    /* Secondary Buttons (Choose Image, etc.) */
-    button[class*="FileWidgetButton"],
-    button[class*="ToolbarButton"] {
-      background-color: var(--bg-input) !important;
-      color: var(--text-main) !important;
-      border: 1px solid var(--border-subtle) !important;
+      color: var(--text) !important;
+      border: 1px solid var(--border) !important;
       border-radius: 6px !important;
     }
 
+    input:focus, textarea:focus {
+      border-color: var(--gold) !important;
+      box-shadow: 0 0 0 2px rgba(202, 138, 4, 0.2) !important;
+      outline: none !important;
+    }
+
+    /* Primary Buttons (Publish / New Event) */
+    button[class*="PublishButton"], 
+    a[class*="CollectionTopNewButton"],
+    button[class*="LoginButton"] {
+      background-color: var(--gold) !important;
+      color: #000 !important;
+      border-radius: 8px !important;
+      font-weight: bold !important;
+      transition: all 0.3s ease !important;
+    }
+    
+    button[class*="PublishButton"]:hover, 
+    a[class*="CollectionTopNewButton"]:hover {
+      background-color: var(--gold-hover) !important;
+      transform: translateY(-2px) !important;
+    }
+
+    /* Image Upload Button */
+    button[class*="FileWidgetButton"] {
+      background-color: var(--border) !important;
+      color: var(--text) !important;
+      border: 1px solid #3f3f46 !important;
+      border-radius: 6px !important;
+    }
+    
     button[class*="FileWidgetButton"]:hover {
-      border-color: var(--gold-primary) !important;
-      color: var(--gold-primary) !important;
-    }
-
-    /* Editor Toolbar & Preview Pane */
-    div[class*="ToolbarContainer"] {
-      background-color: var(--bg-card) !important;
-      border-bottom: 1px solid var(--border-subtle) !important;
-    }
-
-    div[class*="PreviewPaneContainer"] {
-      background-color: #0d0d10 !important;
-      border-left: 1px solid var(--border-subtle) !important;
-      color: var(--text-main) !important;
-    }
-
-    /* Scrollbar Styling */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: var(--bg-dark);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #27272a;
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--gold-primary);
+      border-color: var(--gold) !important;
+      color: var(--gold) !important;
     }
   </style>
 </head>
 <body>
-  <!-- Decap CMS Script -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>

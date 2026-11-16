@@ -10,6 +10,8 @@ collections:
     label: "Completed Events"
     folder: "_events"
     create: true
+    editor:
+      preview: false
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - { label: "Event Title", name: "title", widget: "string" }
