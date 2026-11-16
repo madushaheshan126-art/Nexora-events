@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Nexora Events - Island-Wide Luxury Event Architecture, 3D Spatial Blueprinting, Concert AV & Bespoke Production across Sri Lanka.">
     <title>Nexora Events | Island-Wide Event Architecture & Production</title>
+
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     
     <!-- Favicon (Browser Tab Icon) -->
     <link rel="icon" type="image/png" href="Main white PNG-07.png">
@@ -679,5 +681,18 @@
             }
         });
     </script>
+
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => {
+          document.location.href = "/admin/";
+        });
+      }
+    });
+  }
+</script>
+
 </body>
 </html>
